@@ -23,7 +23,7 @@ export function ShowJourney() {
   return (
     <section
       id="journey"
-      className="section-pad relative overflow-hidden border-t border-line bg-night py-24 md:py-32"
+      className="theme-dark section-pad relative overflow-hidden border-t border-line py-24 md:py-32"
       aria-label="Show places across India"
     >
       <SketchField />

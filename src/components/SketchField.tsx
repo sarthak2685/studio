@@ -25,35 +25,39 @@ export function SketchField({
     >
       <div className="sketch-wash absolute inset-0" />
 
-      <svg className="absolute inset-0 h-full w-full opacity-[0.45]" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        className="absolute inset-0 h-full w-full opacity-[0.28]"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <defs>
           <filter id={grain}>
             <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch" />
             <feColorMatrix type="saturate" values="0" />
             <feComponentTransfer>
-              <feFuncA type="table" tableValues="0 0.35" />
+              <feFuncA type="table" tableValues="0 0.28" />
             </feComponentTransfer>
           </filter>
           <radialGradient id={paper} cx="50%" cy="40%" r="70%">
-            <stop offset="0%" stopColor="rgba(240,180,41,0.07)" />
-            <stop offset="55%" stopColor="rgba(122,18,18,0.05)" />
+            <stop offset="0%" stopColor="var(--sketch-glow)" />
+            <stop offset="55%" stopColor="var(--sketch-bloom)" />
             <stop offset="100%" stopColor="rgba(0,0,0,0)" />
           </radialGradient>
         </defs>
-        <rect width="100%" height="100%" filter={`url(#${grain})`} opacity="0.35" />
+        <rect width="100%" height="100%" filter={`url(#${grain})`} opacity="0.22" />
         <rect width="100%" height="100%" fill={`url(#${paper})`} />
       </svg>
 
       <svg
         className="absolute inset-0 h-full w-full"
+        style={{ opacity: "var(--sketch-draw-opacity)" }}
         viewBox="0 0 1440 900"
         preserveAspectRatio="xMidYMid slice"
         xmlns="http://www.w3.org/2000/svg"
       >
         <g
           fill="none"
-          stroke="rgba(240,180,41,0.28)"
-          strokeWidth="1.1"
+          stroke="var(--sketch-ink)"
+          strokeWidth="1"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
@@ -115,7 +119,7 @@ export function SketchField({
           {dense ? (
             <>
               {/* Far-left column study — fills empty margin beside copy */}
-              <g transform="translate(-20 40)" opacity="0.72" stroke="rgba(240,180,41,0.38)">
+              <g transform="translate(-20 40)" opacity="0.85" stroke="var(--sketch-ink)">
                 <path d="M60 40 V720" />
                 <path d="M90 80 V680" />
                 <path d="M40 120 H140 M40 200 H140 M40 280 H140 M40 360 H140" />
@@ -138,7 +142,7 @@ export function SketchField({
               </g>
 
               {/* Far-right lantern / minaret */}
-              <g transform="translate(1280 50)" opacity="0.7" stroke="rgba(240,180,41,0.4)">
+              <g transform="translate(1280 50)" opacity="0.85" stroke="var(--sketch-ink)">
                 <path d="M40 700 V180" />
                 <path d="M20 180 H60 L50 140 H30 Z" />
                 <path d="M40 140 V90" />
@@ -180,7 +184,7 @@ export function SketchField({
 
         <g
           fill="none"
-          stroke="rgba(244,235,224,0.12)"
+          stroke="var(--sketch-ink-soft)"
           strokeWidth="0.8"
           strokeLinecap="round"
         >
@@ -197,16 +201,14 @@ export function SketchField({
       </svg>
 
       <div
-        className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(5,3,4,0.55)_100%)] ${
-          dense ? "opacity-70" : ""
-        }`}
+        className={`sketch-vignette absolute inset-0 ${dense ? "opacity-80" : ""}`}
       />
-      <div className="absolute -top-32 -right-24 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(240,180,41,0.09),transparent_68%)]" />
-      <div className="absolute -bottom-36 -left-28 h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle,rgba(122,18,18,0.28),transparent_68%)]" />
+      <div className="sketch-glow absolute -top-32 -right-24 h-[28rem] w-[28rem] rounded-full" />
+      <div className="sketch-bloom absolute -bottom-36 -left-28 h-[30rem] w-[30rem] rounded-full" />
       {dense ? (
         <>
-          <div className="absolute top-10 left-[8%] h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(240,180,41,0.06),transparent_70%)]" />
-          <div className="absolute top-16 right-[10%] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(240,180,41,0.07),transparent_70%)]" />
+          <div className="sketch-glow absolute top-10 left-[8%] h-64 w-64 rounded-full opacity-80" />
+          <div className="sketch-glow absolute top-16 right-[10%] h-72 w-72 rounded-full opacity-90" />
         </>
       ) : null}
     </div>

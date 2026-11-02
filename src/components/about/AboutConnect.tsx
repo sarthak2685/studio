@@ -5,8 +5,8 @@ import { SketchField } from "@/components/SketchField";
 /** Two contact lanes with deliberately different visual languages. */
 export function AboutConnect() {
   return (
-    <section className="section-pad relative overflow-hidden border-t border-line">
-      <SketchField className="opacity-90" />
+    <section className="theme-lift section-pad relative overflow-hidden border-t border-line">
+      <SketchField />
 
       <div className="relative z-10 mx-auto grid max-w-7xl gap-6 px-5 md:grid-cols-2 md:gap-0 md:px-8">
         {/* Plan — folio / brief card */}

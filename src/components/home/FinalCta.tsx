@@ -1,32 +1,61 @@
 import Link from "next/link";
-import { site } from "@/content/site";
+import { SketchField } from "@/components/SketchField";
+
+const pillars = [
+  {
+    label: "Story first",
+    body: "Research, script and sound before a single projector is specified.",
+  },
+  {
+    label: "Built for the façade",
+    body: "2D & 3D mapping, son-et-lumière, laser & water — fitted to the monument.",
+  },
+  {
+    label: "Owned end to end",
+    body: "Survey, content, systems and opening night — one studio, one chain.",
+  },
+] as const;
 
 export function FinalCta() {
   return (
-    <section className="border-t border-line bg-burgundy-deep">
-      <div className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-5 py-20 md:flex-row md:items-center md:justify-between md:px-8 md:py-24">
-        <div className="max-w-2xl">
-          <p className="text-[11px] tracking-[0.28em] text-gold uppercase">Start a conversation</p>
-          <h2 className="font-display mt-4 text-4xl text-cream md:text-5xl text-balance">
-            Tell us about the site and the story.
+    <section className="theme-lift section-pad relative overflow-hidden border-t border-line py-24 md:py-28">
+      <SketchField />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
+        <div className="max-w-3xl">
+          <p className="text-[11px] tracking-[0.28em] text-gold uppercase">What we deliver</p>
+          <h2 className="mt-4 text-3xl font-semibold leading-snug text-cream md:text-5xl text-balance">
+            Architecture stays. The night changes.
           </h2>
-          <p className="mt-4 text-cream/70">We reply within two working days.</p>
+          <div className="gold-rule mt-5" />
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
+            Magical Theatre turns heritage, tourism and culture sites into living shows — not décor
+            lighting.
+          </p>
         </div>
-        <div className="flex flex-wrap gap-3">
+
+        <div className="mt-14 grid gap-10 border-t border-line/40 pt-10 md:grid-cols-3 md:gap-12">
+          {pillars.map((item) => (
+            <div key={item.label}>
+              <p className="text-[11px] tracking-[0.22em] text-gold uppercase">{item.label}</p>
+              <p className="mt-3 text-sm leading-relaxed text-cream/70 md:text-[15px]">{item.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3">
           <Link
-            href="/contact"
-            className="inline-flex min-w-[10.5rem] items-center justify-center bg-gold px-6 py-3.5 text-xs tracking-[0.2em] text-night uppercase transition hover:bg-cream"
+            href="/services"
+            className="text-xs tracking-[0.22em] text-gold uppercase underline-offset-4 transition hover:underline"
           >
-            {site.cta.primary}
+            How we build a show →
           </Link>
-          <a
-            href={site.contact.whatsapp}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-w-[10.5rem] items-center justify-center border border-cream/35 px-6 py-3.5 text-xs tracking-[0.2em] text-cream uppercase transition hover:border-gold hover:text-gold"
+          <Link
+            href="/work"
+            className="text-xs tracking-[0.22em] text-cream/50 uppercase transition hover:text-gold"
           >
-            WhatsApp us
-          </a>
+            Landmark shows
+          </Link>
         </div>
       </div>
     </section>

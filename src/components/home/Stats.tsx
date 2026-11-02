@@ -72,13 +72,13 @@ export function Stats() {
   }, []);
 
   return (
-    <section ref={ref} className="section-pad relative overflow-hidden border-y border-line">
-      <SketchField className="opacity-80" />
+    <section ref={ref} className="theme-lift section-pad relative overflow-hidden border-y border-line">
+      <SketchField />
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-2 gap-px md:grid-cols-4">
         {site.stats.map((stat, i) => (
           <div
             key={stat.label}
-            className="border border-transparent bg-night/40 px-5 py-12 backdrop-blur-[1px] md:px-8 md:py-16"
+            className="px-5 py-12 md:px-8 md:py-16"
           >
             <div className="text-gold/80">{icons[i]}</div>
             <p

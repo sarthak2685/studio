@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function AwardsPage() {
   return (
     <PageTransition>
-      <section className="section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
+      <section className="theme-dark section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
         <SketchField />
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
@@ -33,15 +33,15 @@ export default function AwardsPage() {
         </div>
       </section>
 
-      <section className="section-pad relative overflow-hidden">
-        <SketchField className="opacity-75" />
+      <section className="theme-lift section-pad relative overflow-hidden">
+        <SketchField />
         <div className="relative z-10">
           <AwardsList />
         </div>
       </section>
 
-      <section className="section-pad relative overflow-hidden border-t border-line">
-        <SketchField className="opacity-90" />
+      <section className="theme-dark section-pad relative overflow-hidden border-t border-line">
+        <SketchField />
         <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 md:flex-row md:items-end md:justify-between md:px-8 md:py-20">
           <div className="max-w-xl">
             <p className="text-[11px] tracking-[0.28em] text-gold uppercase">Keep going</p>

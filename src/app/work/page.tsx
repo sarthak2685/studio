@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <PageTransition>
-      <section className="section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
+      <section className="theme-dark section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
         <SketchField />
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <WorkHero />

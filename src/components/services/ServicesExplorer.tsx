@@ -11,7 +11,7 @@ export function ServicesExplorer() {
   return (
     <>
       {/* Hero */}
-      <section className="section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
+      <section className="theme-dark section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
         <SketchField />
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <motion.div
@@ -23,7 +23,7 @@ export function ServicesExplorer() {
               Services
             </p>
             <h1 className="mt-4 max-w-4xl text-4xl font-extrabold leading-[1.1] tracking-tight text-cream md:text-6xl lg:text-[4.25rem]">
-              What we create
+              We Provide Turnkey Solutions
             </h1>
             <div className="gold-rule mt-6" />
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-cream/85 md:text-lg">
@@ -53,17 +53,14 @@ export function ServicesExplorer() {
       </section>
 
       {/* Zigzag capabilities */}
-      <div className="section-pad relative overflow-hidden">
-        <SketchField className="opacity-80" />
-        <div className="relative z-10">
-          {services.map((service, i) => (
-            <ServiceZigZag key={service.id} service={service} index={i} />
-          ))}
-        </div>
+      <div>
+        {services.map((service, i) => (
+          <ServiceZigZag key={service.id} service={service} index={i} />
+        ))}
       </div>
 
       {/* Process */}
-      <section className="section-pad relative overflow-hidden border-t border-line py-20 md:py-28">
+      <section className="theme-dark section-pad relative overflow-hidden border-t border-line py-20 md:py-28">
         <SketchField />
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <motion.div
@@ -86,8 +83,8 @@ export function ServicesExplorer() {
       </section>
 
       {/* Soft close strip */}
-      <section className="section-pad relative overflow-hidden border-t border-line">
-        <SketchField className="opacity-90" />
+      <section className="theme-lift section-pad relative overflow-hidden border-t border-line">
+        <SketchField />
         <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 md:flex-row md:items-end md:justify-between md:px-8 md:py-20">
           <div className="max-w-xl">
             <p className="text-[11px] tracking-[0.28em] text-gold uppercase">Next step</p>

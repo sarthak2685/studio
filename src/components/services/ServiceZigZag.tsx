@@ -92,7 +92,9 @@ export function ServiceZigZag({ service, index }: { service: Service; index: num
     <motion.section
       ref={ref}
       id={service.id}
-      className="relative border-b border-line/40 py-16 md:py-24"
+      className={`relative border-b border-line/40 py-16 md:py-24 ${
+        index % 2 === 0 ? "theme-lift" : "theme-dark"
+      }`}
     >
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 md:grid-cols-2 md:gap-14 md:px-8">
         <motion.div

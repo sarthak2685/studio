@@ -5,7 +5,7 @@ import { SketchField } from "@/components/SketchField";
 /** Case-study close — stacked lanes, not the home banner or About split. */
 export function WorkConnect({ projectTitle }: { projectTitle?: string }) {
   return (
-    <section className="section-pad relative overflow-hidden border-t border-line">
+    <section className="theme-dark section-pad relative overflow-hidden border-t border-line">
       <SketchField />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,18 +21,25 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md transition-colors duration-500 ${
-        scrolled ? "border-line/50 bg-night/85" : "border-transparent bg-night/40"
+      className={`fixed inset-x-0 top-0 z-40 border-b transition-colors duration-500 ${
+        scrolled ? "border-line/40 bg-night" : "border-transparent bg-night"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20 md:px-8">
-        <Link href="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className="font-display text-xl tracking-[0.18em] text-cream uppercase md:text-2xl">
-            Magical Theatre
-          </span>
-          <span className="hidden text-[10px] tracking-[0.28em] text-gold uppercase sm:inline">
-            {site.tagline}
-          </span>
+      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-5 md:h-24 md:px-8">
+        <Link
+          href="/"
+          className="group relative z-10 flex shrink-0 items-center"
+          onClick={() => setOpen(false)}
+        >
+          <Image
+            src="/media/logo-magical-theatre.png"
+            alt="Magical Theatre"
+            width={342}
+            height={220}
+            className="h-12 w-auto object-contain md:h-[3.75rem]"
+            priority
+            unoptimized
+          />
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">

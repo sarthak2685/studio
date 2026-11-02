@@ -17,8 +17,34 @@ export function mediaForSlug(slug: string, offset = 0) {
 export const heroMedia = "/media/bundle-08.jpg";
 export const heroMedia2d = "/media/bundle-03.jpg";
 export const heroMedia3d = "/media/bundle-00.jpg";
+export const heroMediaTemple = "/media/hero-product-temple.jpg";
 export const studioMedia = "/media/bundle-01.jpg";
 export const founderMedia = "/media/team/aman-arora.jpg";
+
+/** Hero product-stage stills that auto-rotate (2D / 3D / heritage). */
+export const heroProductStills = [
+  {
+    id: "2d",
+    src: heroMedia2d,
+    label: "2D frames",
+    eyebrow: "Product · 2D narrative",
+    caption: "Illustrated story locked frame-by-frame to the façade.",
+  },
+  {
+    id: "3d",
+    src: heroMedia3d,
+    label: "3D mapping",
+    eyebrow: "Product · 3D depth",
+    caption: "Architecture gains volume, motion and relief.",
+  },
+  {
+    id: "heritage",
+    src: heroMediaTemple,
+    label: "Heritage show",
+    eyebrow: "Product · Living temple",
+    caption: "Faith, flag and façade — a monument told in light.",
+  },
+] as const;
 
 /**
  * Curated project stills — mapped to the closest show photograph in /public/media.

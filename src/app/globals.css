@@ -1,18 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --night: #050304;
-  --night-elevated: #0e090a;
-  --burgundy: #4d0505;
-  --burgundy-deep: #2a0303;
-  --burgundy-glow: #7a1212;
-  --gold: #f0b429;
-  --gold-soft: #d4a017;
-  --cream: #f4ebe0;
-  --muted: #a89a90;
-  --line: rgba(240, 180, 41, 0.18);
+  --night: #2e0c0c;
+  --night-elevated: #3d1212;
+  --burgundy: #5c1818;
+  --burgundy-deep: #240909;
+  --burgundy-glow: #7a2020;
+  --gold: #e8ae2a;
+  --gold-soft: #c49216;
+  --cream: #f1e8dc;
+  --muted: #9a8b82;
+  --line: rgba(232, 174, 42, 0.14);
   --background: var(--night);
   --foreground: var(--cream);
+  /* Section washes — quiet dark / slightly lifted */
+  --wash-a: #361010;
+  --wash-b: #2e0c0c;
+  --wash-c: #240909;
+  --section-surface: var(--night);
+  /* Sketch ink — overridden per theme */
+  --sketch-ink: rgba(150, 100, 35, 0.12);
+  --sketch-ink-soft: rgba(180, 160, 140, 0.08);
+  --sketch-glow: rgba(232, 174, 42, 0.03);
+  --sketch-bloom: rgba(92, 24, 24, 0.16);
+  --sketch-draw-opacity: 0.55;
 }
 
 @theme inline {
@@ -72,7 +83,7 @@ h3 {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.035;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -84,17 +95,57 @@ h3 {
 
 .media-placeholder {
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(122, 18, 18, 0.45), transparent 55%),
-    radial-gradient(ellipse at 70% 80%, rgba(240, 180, 41, 0.12), transparent 50%),
-    linear-gradient(160deg, #120608 0%, #050304 55%, #1a0808 100%);
+    radial-gradient(ellipse at 30% 20%, rgba(92, 24, 24, 0.4), transparent 55%),
+    radial-gradient(ellipse at 70% 80%, rgba(232, 174, 42, 0.06), transparent 50%),
+    linear-gradient(160deg, #3d1212 0%, #2e0c0c 55%, #361010 100%);
 }
 
 .sketch-wash {
   background:
-    radial-gradient(ellipse at 12% 18%, rgba(122, 18, 18, 0.34), transparent 50%),
-    radial-gradient(ellipse at 88% 78%, rgba(240, 180, 41, 0.12), transparent 45%),
-    radial-gradient(ellipse at 50% 8%, rgba(244, 235, 224, 0.05), transparent 50%),
-    linear-gradient(168deg, #1a0c10 0%, #080405 46%, #12090c 100%);
+    radial-gradient(ellipse at 14% 20%, var(--sketch-bloom), transparent 52%),
+    radial-gradient(ellipse at 86% 78%, var(--sketch-glow), transparent 48%),
+    linear-gradient(168deg, var(--wash-a) 0%, var(--wash-b) 50%, var(--wash-c) 100%);
+}
+
+.sketch-vignette {
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(8, 3, 3, 0.72) 100%);
+}
+
+.sketch-glow {
+  background: radial-gradient(circle, var(--sketch-glow), transparent 68%);
+}
+
+.sketch-bloom {
+  background: radial-gradient(circle, var(--sketch-bloom), transparent 68%);
+}
+
+/* Quiet alternation — dark stage / slightly lifted stage */
+.theme-dark {
+  --wash-a: #361010;
+  --wash-b: #2e0c0c;
+  --wash-c: #240909;
+  --section-surface: var(--night);
+  --sketch-ink: rgba(120, 78, 28, 0.1);
+  --sketch-ink-soft: rgba(140, 120, 105, 0.06);
+  --sketch-glow: rgba(232, 174, 42, 0.025);
+  --sketch-bloom: rgba(60, 16, 16, 0.22);
+  --sketch-draw-opacity: 0.42;
+  background-color: var(--section-surface);
+  color: var(--cream);
+}
+
+.theme-lift {
+  --wash-a: #451616;
+  --wash-b: #3d1212;
+  --wash-c: #341010;
+  --section-surface: var(--night-elevated);
+  --sketch-ink: rgba(232, 174, 42, 0.26);
+  --sketch-ink-soft: rgba(244, 235, 224, 0.18);
+  --sketch-glow: rgba(232, 174, 42, 0.07);
+  --sketch-bloom: rgba(120, 36, 36, 0.14);
+  --sketch-draw-opacity: 0.78;
+  background-color: var(--section-surface);
+  color: var(--cream);
 }
 
 .section-pad {

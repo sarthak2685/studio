@@ -63,7 +63,7 @@ export function Worldwide() {
 
   return (
     <section
-      className="section-pad relative overflow-hidden border-t border-line bg-night py-24 md:py-28"
+      className="theme-dark section-pad relative overflow-hidden border-t border-line py-24 md:py-28"
       aria-label="Worldwide presence"
     >
       <SketchField />

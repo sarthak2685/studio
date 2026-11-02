@@ -75,7 +75,7 @@ async function CaseStudyBody({ params }: Props) {
           </div>
         </header>
 
-        <section className="section-pad relative overflow-hidden border-b border-line">
+        <section className="theme-lift section-pad relative overflow-hidden border-b border-line">
           <SketchField />
           <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-[1fr_1.4fr] md:px-8 md:py-24">
             <aside className="h-fit space-y-5 border border-line/50 bg-night/55 p-6 backdrop-blur-[1px] md:sticky md:top-28">

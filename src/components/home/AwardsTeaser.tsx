@@ -24,7 +24,7 @@ export function AwardsTeaser() {
   const loop = [...ribbon, ...ribbon];
 
   return (
-    <section className="section-pad relative overflow-hidden border-t border-line py-24 md:py-32">
+    <section className="theme-dark section-pad relative overflow-hidden border-t border-line py-24 md:py-32">
       <SketchField />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
@@ -40,7 +40,7 @@ export function AwardsTeaser() {
         </div>
       </div>
 
-      <div className="relative z-10 mt-12 overflow-hidden border-y border-line/50 bg-burgundy-deep py-5">
+      <div className="relative z-10 mt-12 overflow-hidden border-y border-line/40 py-5">
         <div className="marquee-track-reverse flex w-max gap-10 whitespace-nowrap">
           {loop.map((item, i) => (
             <span key={`${item}-${i}`} className="flex items-center gap-10">

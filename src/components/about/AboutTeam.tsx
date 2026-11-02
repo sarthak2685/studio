@@ -13,7 +13,7 @@ export function AboutTeam() {
   return (
     <section
       id="team"
-      className="section-pad relative overflow-hidden border-t border-line py-24 md:py-32"
+      className="theme-dark section-pad relative overflow-hidden border-t border-line py-24 md:py-32"
     >
       <SketchField />
 

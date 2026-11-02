@@ -5,7 +5,7 @@ import { SketchField } from "@/components/SketchField";
 
 export function Footer() {
   return (
-    <footer className="section-pad relative mt-auto overflow-hidden border-t border-line bg-night-elevated">
+    <footer className="theme-dark section-pad relative mt-auto overflow-hidden border-t border-line">
       <SketchField />
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 opacity-30 lg:block">
         <Image
@@ -20,9 +20,14 @@ export function Footer() {
 
       <div className="relative z-10 mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-[1.2fr_0.8fr_1fr] md:px-8 md:py-20">
         <div>
-          <p className="font-display text-3xl tracking-[0.14em] text-cream uppercase">
-            Magical Theatre
-          </p>
+          <Image
+            src="/media/logo-magical-theatre.png"
+            alt="Magical Theatre"
+            width={342}
+            height={220}
+            className="h-[7.5rem] w-auto object-contain object-left"
+            unoptimized
+          />
           <p className="mt-4 max-w-md text-sm leading-relaxed text-muted md:text-base">
             {site.tagline}. 2D & 3D projection mapping, son-et-lumière and landmark spectacles —
             from India to stages worldwide.

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <PageTransition>
-      <section className="section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
+      <section className="theme-dark section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
         <SketchField />
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
@@ -42,16 +42,16 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="section-pad relative overflow-hidden py-14 md:py-20">
-        <SketchField className="opacity-80" />
+      <section className="theme-lift section-pad relative overflow-hidden py-14 md:py-20">
+        <SketchField />
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 md:px-8">
           <ContactForm />
           <ContactChannels />
         </div>
       </section>
 
-      <section className="section-pad relative overflow-hidden border-t border-line">
-        <SketchField className="opacity-90" />
+      <section className="theme-dark section-pad relative overflow-hidden border-t border-line">
+        <SketchField />
         <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-6 px-5 py-14 md:flex-row md:items-center md:justify-between md:px-8 md:py-16">
           <div>
             <p className="text-[11px] tracking-[0.28em] text-gold uppercase">Prefer a quick line</p>

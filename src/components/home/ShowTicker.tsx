@@ -15,7 +15,7 @@ export function ShowTicker() {
   return (
     <section
       aria-label="What Magical Theatre creates"
-      className="overflow-hidden border-y border-line bg-burgundy-deep py-5"
+      className="theme-lift overflow-hidden border-y border-line py-5"
     >
       <div className="marquee-track flex w-max items-center gap-10 whitespace-nowrap">
         {loop.map((phrase, i) => (

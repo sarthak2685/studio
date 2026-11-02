@@ -19,7 +19,7 @@ export default function AboutPage() {
   return (
     <PageTransition>
       {/* Intro */}
-      <section className="section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
+      <section className="theme-dark section-pad relative overflow-hidden border-b border-line py-16 md:py-24">
         <SketchField />
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
@@ -79,7 +79,7 @@ export default function AboutPage() {
       </section>
 
       {/* Method */}
-      <section className="section-pad relative overflow-hidden border-b border-line py-20 md:py-28">
+      <section className="theme-lift section-pad relative overflow-hidden border-b border-line py-20 md:py-28">
         <SketchField />
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
@@ -101,8 +101,8 @@ export default function AboutPage() {
       <AboutTeam />
 
       {/* Stats */}
-      <section className="section-pad relative overflow-hidden border-t border-line py-20 md:py-24">
-        <SketchField className="opacity-70" />
+      <section className="theme-lift section-pad relative overflow-hidden border-t border-line py-20 md:py-24">
+        <SketchField />
         <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-2 gap-8 px-5 md:grid-cols-4 md:px-8">
           {site.stats.map((stat, i) => (
             <Reveal key={stat.label} delay={i * 0.05}>

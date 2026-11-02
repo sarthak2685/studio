@@ -100,7 +100,7 @@ export function SelectedWork() {
   return (
     <section
       ref={section}
-      className="section-pad relative overflow-hidden border-t border-line bg-night"
+      className="theme-dark section-pad relative overflow-hidden border-t border-line"
       aria-label="Selected landmark shows"
     >
       <SketchField />

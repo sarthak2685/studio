@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local PDF tooling / extracts (not app code)
+.pdf-libs/
+.pdf-extract.txt
+*.part
+public/media/reels/Constitution*/

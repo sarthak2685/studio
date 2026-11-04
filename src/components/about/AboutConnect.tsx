@@ -20,7 +20,7 @@ export function AboutConnect() {
             className="pointer-events-none absolute bottom-0 left-0 h-16 w-16 border-b border-l border-gold/20"
           />
           <p className="text-[11px] tracking-[0.28em] text-gold uppercase">Commission a show</p>
-          <h2 className="mt-4 text-3xl font-semibold leading-snug text-cream md:text-4xl">
+          <h2 className="display-lg mt-3.5 text-[clamp(1.875rem,3.6vw,2.75rem)]">
             Plan your show
           </h2>
           <div className="gold-rule mt-5" />
@@ -65,7 +65,7 @@ export function AboutConnect() {
           />
           <div className="relative">
             <p className="text-[11px] tracking-[0.28em] text-[#7ddea3] uppercase">Talk now</p>
-            <h2 className="mt-4 text-3xl font-semibold leading-snug text-cream md:text-4xl">
+            <h2 className="display-lg mt-3.5 text-[clamp(1.875rem,3.6vw,2.75rem)]">
               WhatsApp the studio
             </h2>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/65 md:text-base">

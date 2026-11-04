@@ -26,7 +26,7 @@ export default function AboutPage() {
             <p className="text-sm font-bold tracking-[0.36em] text-gold uppercase md:text-base">
               About us
             </p>
-            <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-snug text-cream md:text-6xl lg:text-[4rem]">
+            <h1 className="display-xl text-extrude mt-4 max-w-4xl text-[clamp(2.5rem,6vw,5rem)]">
               We are storytellers in light
             </h1>
             <div className="gold-rule mt-6" />
@@ -84,7 +84,7 @@ export default function AboutPage() {
         <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
             <p className="text-[11px] tracking-[0.32em] text-gold uppercase">Method</p>
-            <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-snug text-cream md:text-5xl">
+            <h2 className="display-lg mt-3.5 max-w-3xl text-[clamp(2rem,4.2vw,3.5rem)]">
               From survey to showtime
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
@@ -106,7 +106,7 @@ export default function AboutPage() {
         <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-2 gap-8 px-5 md:grid-cols-4 md:px-8">
           {site.stats.map((stat, i) => (
             <Reveal key={stat.label} delay={i * 0.05}>
-              <p className="text-4xl font-semibold text-gold md:text-5xl">{stat.value}</p>
+              <p className="num-extrude font-display text-[clamp(2.25rem,4vw,3.25rem)] font-black">{stat.value}</p>
               <p className="mt-3 text-xs tracking-[0.14em] text-muted uppercase">{stat.label}</p>
             </Reveal>
           ))}

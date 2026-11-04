@@ -3,32 +3,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { site } from "@/content/site";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-40 border-b transition-colors duration-500 ${
-        scrolled ? "border-line/40 bg-night" : "border-transparent bg-night"
-      }`}
-    >
-      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-5 md:h-24 md:px-8">
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-line bg-night/85 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-[82.5rem] items-center gap-8 px-6 md:h-20">
         <Link
           href="/"
-          className="group relative z-10 flex shrink-0 items-center"
+          aria-label="Magical Theatre home"
+          className="flex shrink-0 items-center"
           onClick={() => setOpen(false)}
         >
           <Image
@@ -36,13 +25,13 @@ export function Header() {
             alt="Magical Theatre"
             width={342}
             height={220}
-            className="h-12 w-auto object-contain md:h-[3.75rem]"
+            className="h-10 w-auto object-contain md:h-11"
             priority
             unoptimized
           />
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden flex-1 items-center gap-7 lg:flex">
           {site.nav
             .filter((item) => item.href !== "/")
             .map((item) => {
@@ -51,40 +40,65 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-xs tracking-[0.22em] uppercase transition-colors ${
-                    active ? "text-gold" : "text-cream/70 hover:text-cream"
+                  className={`text-[0.9375rem] font-medium tracking-[0.02em] transition-colors ${
+                    active ? "text-gold" : "text-cream hover:text-gold"
                   }`}
                 >
                   {item.label}
                 </Link>
               );
             })}
+        </nav>
+
+        <div className="ml-auto flex items-center gap-2.5">
+          <a
+            href={site.contact.whatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="hidden min-h-11 items-center gap-2 rounded-full border border-cream/25 px-4 text-[0.9375rem] text-cream transition hover:border-gold hover:text-gold md:inline-flex"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.3A8.5 8.5 0 1 1 20.5 11.6z" />
+            </svg>
+            WhatsApp
+          </a>
           <Link
             href="/contact"
-            className="border border-gold/50 bg-burgundy px-4 py-2 text-xs tracking-[0.2em] text-cream uppercase transition hover:bg-burgundy-glow"
+            className="inline-flex min-h-11 items-center rounded-full bg-gold px-5 text-[0.9375rem] font-semibold text-ink transition hover:bg-gold-bright"
           >
             {site.cta.primary}
           </Link>
-        </nav>
 
-        <button
-          type="button"
-          className="flex h-10 w-10 items-center justify-center border border-line lg:hidden"
-          aria-label="Menu"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="relative block h-3 w-5">
-            <span
-              className={`absolute left-0 block h-px w-full bg-cream transition ${open ? "top-1.5 rotate-45" : "top-0"}`}
-            />
-            <span
-              className={`absolute left-0 top-1.5 block h-px w-full bg-cream transition ${open ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`absolute left-0 block h-px w-full bg-cream transition ${open ? "top-1.5 -rotate-45" : "top-3"}`}
-            />
-          </span>
-        </button>
+          <button
+            type="button"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/25 lg:hidden"
+            aria-label="Menu"
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="relative block h-3 w-5">
+              <span
+                className={`absolute left-0 block h-px w-full bg-cream transition ${open ? "top-1.5 rotate-45" : "top-0"}`}
+              />
+              <span
+                className={`absolute top-1.5 left-0 block h-px w-full bg-cream transition ${open ? "opacity-0" : ""}`}
+              />
+              <span
+                className={`absolute left-0 block h-px w-full bg-cream transition ${open ? "top-1.5 -rotate-45" : "top-3"}`}
+              />
+            </span>
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -93,26 +107,19 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-t border-line bg-night-elevated lg:hidden"
+            className="overflow-hidden border-t border-line bg-night-elevated lg:hidden"
           >
-            <div className="flex flex-col gap-1 px-5 py-6">
+            <div className="flex flex-col gap-1 px-6 py-5">
               {site.nav.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="py-3 text-sm tracking-[0.2em] text-cream/80 uppercase"
+                  className="py-3 font-medium text-cream"
                 >
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href="/contact"
-                onClick={() => setOpen(false)}
-                className="mt-3 border border-gold/50 bg-burgundy px-4 py-3 text-center text-xs tracking-[0.2em] text-cream uppercase"
-              >
-                {site.cta.primary}
-              </Link>
             </div>
           </motion.div>
         )}

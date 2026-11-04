@@ -94,7 +94,7 @@ async function CaseStudyBody({ params }: Props) {
 
             <div>
               <p className="text-xs tracking-[0.24em] text-gold uppercase">The story</p>
-              <h2 className="mt-3 text-3xl font-semibold leading-snug text-cream md:text-4xl">
+              <h2 className="display-lg mt-3.5 text-[clamp(1.875rem,3.6vw,2.75rem)]">
                 Myth, memory and place — told on its own walls.
               </h2>
               <div className="mt-10 space-y-10">
@@ -116,7 +116,7 @@ async function CaseStudyBody({ params }: Props) {
                 <p className="text-xs tracking-[0.22em] text-muted uppercase">Next project</p>
                 <Link
                   href={`/work/${next.slug}`}
-                  className="mt-3 block text-3xl font-semibold text-cream transition hover:text-gold"
+                  className="display-lg mt-3 block text-[clamp(1.625rem,3vw,2.25rem)] transition hover:text-gold"
                 >
                   {next.title} →
                 </Link>

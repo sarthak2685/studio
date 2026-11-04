@@ -10,7 +10,7 @@ export function WorkConnect({ projectTitle }: { projectTitle?: string }) {
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
         <p className="text-[11px] tracking-[0.28em] text-gold uppercase">Continue the story</p>
-        <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-snug text-cream md:text-4xl">
+        <h2 className="display-lg mt-3.5 max-w-2xl text-[clamp(1.875rem,3.6vw,2.75rem)]">
           {projectTitle
             ? `Want a night like ${projectTitle}?`
             : "Want a night like this on your façade?"}

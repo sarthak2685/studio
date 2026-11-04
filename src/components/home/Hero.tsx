@@ -2,214 +2,293 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { site } from "@/content/site";
-import { heroMedia } from "@/content/media";
-import { prefersReducedMotion } from "@/lib/motion";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { heroVideo } from "@/content/videos";
+import { MOTION_QUERY } from "@/lib/motion";
 
-const PRODUCT_STILLS = [
-  {
-    id: "2d",
+const ROOM = {
+  left: {
     src: "/media/bundle-03.jpg",
-    label: "2D frames",
-    eyebrow: "Product · 2D narrative",
-    caption: "Illustrated story locked frame-by-frame to the façade.",
+    alt: "Rajwada Palace façade mapped with the Holkar story",
+    label: "Rajwada Palace, Indore",
   },
-  {
-    id: "3d",
-    src: "/media/bundle-00.jpg",
-    label: "3D mapping",
-    eyebrow: "Product · 3D depth",
-    caption: "Architecture gains volume, motion and relief.",
+  right: {
+    src: "/media/bundle-17.jpg",
+    alt: "A Theyyam face projected across Travancore House",
+    label: "Travancore House, Delhi",
   },
-  {
-    id: "heritage",
-    src: "/media/hero-product-temple.jpg",
-    label: "Heritage show",
-    eyebrow: "Product · Living temple",
-    caption: "Faith, flag and façade — a monument told in light.",
-  },
-] as const;
+  floor: "/media/bundle-07.jpg",
+};
+
+/** The room is authored at 1500px wide and zooms as a whole to fit narrower screens. */
+const DESIGN_WIDTH = 1500;
+
+function subscribeResize(onChange: () => void) {
+  window.addEventListener("resize", onChange);
+  return () => window.removeEventListener("resize", onChange);
+}
+
+function subscribeMotion(onChange: () => void) {
+  const query = window.matchMedia(MOTION_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
 
 export function Hero() {
-  const root = useRef<HTMLElement>(null);
-  const [index, setIndex] = useState(1);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const raf = useRef(0);
 
-  useEffect(() => {
-    const el = root.current;
-    if (!el || prefersReducedMotion()) return;
+  const scale = useSyncExternalStore(
+    subscribeResize,
+    () => Math.min(1, Math.max(0.52, window.innerWidth / DESIGN_WIDTH)),
+    () => 1,
+  );
+  const still = useSyncExternalStore(
+    subscribeMotion,
+    () => window.matchMedia(MOTION_QUERY).matches,
+    () => false,
+  );
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        "[data-hero-media]",
-        { scale: 1.14 },
-        { scale: 1, duration: 2.4, ease: "power2.out" },
-      );
-      gsap.fromTo(
-        "[data-hero-mask]",
-        { yPercent: 105 },
-        { yPercent: 0, duration: 1, stagger: 0.12, ease: "power3.out", delay: 0.2 },
-      );
-      gsap.fromTo(
-        "[data-hero-fade]",
-        { y: 16, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: "power3.out", delay: 0.5 },
-      );
-    }, el);
+  useEffect(() => () => cancelAnimationFrame(raf.current), []);
 
-    return () => ctx.revert();
-  }, []);
+  const onMove = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      if (still || raf.current) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+      raf.current = requestAnimationFrame(() => {
+        raf.current = 0;
+        setTilt({ x, y });
+      });
+    },
+    [still],
+  );
 
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % PRODUCT_STILLS.length);
-    }, 4000);
-    return () => window.clearInterval(id);
-  }, []);
-
-  const active = PRODUCT_STILLS[index] ?? PRODUCT_STILLS[1];
+  // Scaling every length by the same factor zooms the room without distorting it.
+  const u = (n: number) => n * scale;
 
   return (
     <section
-      ref={root}
-      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-28 pb-16 md:pt-32 md:pb-20"
+      id="top"
+      aria-label="Inside a Magical Theatre projection room"
+      onMouseMove={onMove}
+      onMouseLeave={() => setTilt({ x: 0, y: 0 })}
+      className="relative h-[32rem] overflow-hidden bg-stage sm:h-[40rem] lg:h-[54rem]"
+      style={{ perspective: `${u(1100)}px`, perspectiveOrigin: "50% 46%" }}
     >
-      <div className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0" aria-hidden>
-        {PRODUCT_STILLS.map((still) => (
-          <Image key={still.id} src={still.src} alt="" width={16} height={16} priority />
-        ))}
-      </div>
+      <div
+        className="absolute top-1/2 left-1/2 h-0 w-0"
+        style={{
+          transformStyle: "preserve-3d",
+          transition: "transform .35s ease-out",
+          transform: `rotateX(${(tilt.y * -5).toFixed(2)}deg) rotateY(${(tilt.x * 9).toFixed(2)}deg)`,
+        }}
+      >
+        <div className={still ? "" : "sway"} style={{ transformStyle: "preserve-3d" }}>
+          {/* Back wall — the show itself, running live */}
+          <Surface
+            width={u(2000)}
+            height={u(1124)}
+            left={u(-1000)}
+            top={u(-562)}
+            transform={`translateZ(${u(-560)}px)`}
+          >
+            <video
+              src={heroVideo.src}
+              poster={heroVideo.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-label="Projection mapping show running on the Gateway of India"
+              className="h-full w-full object-cover"
+            />
+            <Plaque style={{ top: u(28), right: u(32), fontSize: u(22) }}>{heroVideo.place}</Plaque>
+          </Surface>
 
-      {/* Full-bleed show photo */}
-      <div className="absolute inset-0 bg-night" aria-hidden />
-      <div className="absolute inset-0 overflow-hidden">
-        <div data-hero-media className="absolute inset-[-6%] will-change-transform">
-          <Image
-            src={heroMedia}
-            alt="Magical Theatre projection mapping"
-            fill
-            priority
-            className="object-cover object-[center_40%]"
-            sizes="100vw"
+          {/* Left wall */}
+          <Surface
+            width={u(1200)}
+            height={u(1124)}
+            left={u(-600)}
+            top={u(-562)}
+            transform={`translateX(${u(-1000)}px) rotateY(90deg)`}
+          >
+            <Image src={ROOM.left.src} alt={ROOM.left.alt} fill priority sizes="1200px" className="object-cover" />
+            <div aria-hidden className="absolute inset-0 bg-stage/35" />
+            <Plaque style={{ bottom: u(40), right: u(60), fontSize: u(26) }}>
+              {ROOM.left.label}
+            </Plaque>
+          </Surface>
+
+          {/* Right wall */}
+          <Surface
+            width={u(1200)}
+            height={u(1124)}
+            left={u(-600)}
+            top={u(-562)}
+            transform={`translateX(${u(1000)}px) rotateY(-90deg)`}
+          >
+            <Image src={ROOM.right.src} alt={ROOM.right.alt} fill priority sizes="1200px" className="object-cover" />
+            <div aria-hidden className="absolute inset-0 bg-stage/35" />
+            <Plaque style={{ bottom: u(40), left: u(60), fontSize: u(26) }}>
+              {ROOM.right.label}
+            </Plaque>
+          </Surface>
+
+          {/* Floor — the show reflected in wet stone */}
+          <Surface
+            width={u(2000)}
+            height={u(1200)}
+            left={u(-1000)}
+            top={u(-600)}
+            transform={`translateY(${u(562)}px) rotateX(90deg)`}
+            hidden
+          >
+            <Image
+              src={ROOM.floor}
+              alt=""
+              fill
+              sizes="2000px"
+              className="object-cover opacity-55"
+              style={{ transform: "scaleY(-1)" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-stage/95 to-stage/35" />
+          </Surface>
+
+          {/* Ceiling — marquee bulbs overhead */}
+          <div
+            aria-hidden
+            className="absolute"
+            style={{
+              left: u(-1000),
+              top: u(-600),
+              width: u(2000),
+              height: u(1200),
+              transform: `translateY(${u(-562)}px) rotateX(-90deg)`,
+              backgroundColor: "#1c0608",
+              backgroundImage: `radial-gradient(circle, #f2c35e 0 ${u(5)}px, rgba(242,195,94,0.25) ${u(9)}px, transparent ${u(13)}px)`,
+              backgroundSize: `${u(80)}px ${u(80)}px`,
+            }}
           />
         </div>
       </div>
 
-      {/* Dark readability overlays — banner only (matches reference) */}
+      {/* Projector beam */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-black/45"
+        className="beam pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 40% 55% at 50% 38%, rgba(255,226,170,0.16), transparent 70%)",
+          mixBlendMode: "screen",
+        }}
       />
+
+      {/* Scrim so copy reads over any surface, weighted to the headline corner */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 w-[70%] max-w-3xl bg-gradient-to-r from-black/75 via-black/35 to-transparent"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(5,2,3,0) 30%, rgba(5,2,3,0.86) 70%, #050203 100%)," +
+            "linear-gradient(100deg, rgba(5,2,3,0.8) 0%, rgba(5,2,3,0.3) 38%, transparent 62%)",
+        }}
       />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black/90 via-black/50 to-transparent"
-      />
 
-      {/* Two-column layout: copy | product stage */}
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 px-5 md:grid-cols-2 md:gap-14 md:px-8 lg:gap-16">
-        {/* Left — text */}
-        <div className="max-w-xl">
-          <p data-hero-fade className="text-[11px] tracking-[0.34em] text-gold uppercase">
-            Magical Theatre · Product
-          </p>
-
-          <h1 className="mt-5 text-4xl font-semibold leading-[1.12] tracking-tight text-white sm:text-5xl md:text-[3.35rem] lg:text-[3.85rem]">
-            <span className="block overflow-hidden pb-1">
-              <span data-hero-mask className="block">
-                We build
-              </span>
-            </span>
-            <span className="block overflow-hidden pb-1">
-              <span data-hero-mask className="block">
-                <span className="text-gold">2D & 3D</span> shows
-              </span>
-            </span>
-            <span className="block overflow-hidden pb-1">
-              <span data-hero-mask className="block">on living monuments</span>
-            </span>
-          </h1>
-
-          <p
-            data-hero-fade
-            className="mt-6 max-w-md text-base leading-relaxed text-white/80 md:text-[1.05rem]"
-          >
-            Projection mapping, son-et-lumière, laser & water — designed, animated and installed so
-            architecture becomes the screen.
-          </p>
-
-          <div data-hero-fade className="mt-9 flex flex-wrap gap-3">
-            <Link
-              href="/work"
-              className="inline-flex min-w-[10.5rem] items-center justify-center bg-burgundy px-6 py-3.5 text-xs tracking-[0.2em] text-white uppercase transition hover:bg-burgundy-glow"
-            >
-              See the shows
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex min-w-[10.5rem] items-center justify-center border border-white/50 px-6 py-3.5 text-xs tracking-[0.2em] text-white uppercase transition hover:border-gold hover:text-gold"
-            >
-              {site.cta.primary}
-            </Link>
+      <div className="absolute inset-x-0 bottom-0 z-[5]">
+        <div className="mx-auto flex max-w-[82.5rem] flex-wrap items-end justify-between gap-6 px-6 pb-8 md:pb-12">
+          <div className="min-w-0 flex-1 basis-[36rem]">
+            <p className="eyebrow mb-3">You are standing inside our work</p>
+            <h1 className="display-xl text-extrude text-[clamp(2.5rem,6.6vw,6rem)]">
+              Every wall
+              <br />
+              is a stage.
+            </h1>
+            <p className="mt-5 max-w-[34rem] text-[1.0625rem] leading-relaxed text-cream-dim md:text-lg">
+              Projection mapping, son-et-lumière, laser water shows and museums — designed,
+              produced and installed across India by one studio.
+            </p>
           </div>
-        </div>
 
-        {/* Right — product stage */}
-        <div data-hero-fade className="w-full max-w-lg justify-self-end md:max-w-none">
-          <div className="mb-3 flex flex-wrap gap-2">
-            {PRODUCT_STILLS.map((still, i) => (
-              <button
-                key={still.id}
-                type="button"
-                onClick={() => setIndex(i)}
-                className={`px-3.5 py-2 text-[10px] tracking-[0.2em] uppercase transition ${
-                  index === i
-                    ? "bg-gold text-night"
-                    : "border border-white/40 text-white/75 hover:border-gold hover:text-gold"
-                }`}
+          <div className="flex flex-col items-start gap-3 pb-1">
+            <Link
+              href="#showreel"
+              className="inline-flex min-h-[3.375rem] items-center gap-3 rounded-full bg-cream py-0 pr-7 pl-2.5 font-semibold text-ink transition hover:bg-white"
+            >
+              <span className="inline-flex h-[2.375rem] w-[2.375rem] items-center justify-center rounded-full bg-burgundy">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#F6EEE6" aria-hidden>
+                  <path d="M7 4.5v15l12-7.5z" />
+                </svg>
+              </span>
+              Watch the showreel
+            </Link>
+            <span className="hidden items-center gap-2 text-sm text-muted md:inline-flex">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
               >
-                {still.label}
-              </button>
-            ))}
+                <path d="M5 9 2 12l3 3M19 9l3 3-3 3M2 12h20" />
+              </svg>
+              Move your cursor to look around
+            </span>
           </div>
-
-          <div className="product-stage relative" style={{ perspective: "1400px" }}>
-            <div
-              key={active.id}
-              className="product-card relative aspect-[5/4] w-full overflow-hidden border border-white/20 shadow-[0_28px_70px_rgba(0,0,0,0.55)]"
-            >
-              <Image
-                src={active.src}
-                alt={active.caption}
-                fill
-                className="object-cover object-center"
-                sizes="(max-width: 768px) 100vw, 42vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-                <p className="text-[10px] tracking-[0.28em] text-gold uppercase">{active.eyebrow}</p>
-                <p className="mt-2 text-base font-semibold text-white md:text-lg">{active.caption}</p>
-              </div>
-            </div>
-
-            {/* Offset gold frame — reference wireframe */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 translate-x-2.5 translate-y-2.5 border border-gold/35 md:translate-x-3 md:translate-y-3"
-            />
-          </div>
-
-          <p className="mt-5 text-[10px] tracking-[0.22em] text-white/40 uppercase">
-            Toggle 2D / 3D — this is what we sell
-          </p>
         </div>
       </div>
     </section>
+  );
+}
+
+function Surface({
+  width,
+  height,
+  left,
+  top,
+  transform,
+  hidden,
+  children,
+}: {
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+  transform: string;
+  hidden?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      aria-hidden={hidden}
+      className="absolute overflow-hidden bg-black"
+      style={{ width, height, left, top, transform }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Plaque({
+  children,
+  style,
+}: {
+  children: React.ReactNode;
+  style: React.CSSProperties;
+}) {
+  return (
+    <span
+      className="absolute rounded-full border border-gold/60 bg-night/75 text-gold-bright"
+      style={{ padding: "0.36em 0.72em", lineHeight: 1.2, ...style }}
+    >
+      {children}
+    </span>
   );
 }

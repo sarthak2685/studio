@@ -11,12 +11,8 @@ export function SectionHeading({
 }) {
   return (
     <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
-      {eyebrow ? (
-        <p className="text-xs tracking-[0.28em] text-gold uppercase">{eyebrow}</p>
-      ) : null}
-      <h2 className="mt-3 text-3xl font-semibold leading-snug text-cream md:text-5xl lg:text-[3.25rem] text-balance">
-        {title}
-      </h2>
+      {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+      <h2 className="display-lg mt-3.5 text-[clamp(2rem,4.2vw,3.5rem)] text-balance">{title}</h2>
       <div className={`gold-rule mt-5 ${align === "center" ? "mx-auto" : ""}`} />
       {body ? (
         <p className="mt-6 text-base leading-relaxed text-muted md:text-lg">{body}</p>

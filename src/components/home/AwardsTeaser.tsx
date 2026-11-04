@@ -1,161 +1,167 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
-import { awards } from "@/content/awards";
-import { SketchField } from "@/components/SketchField";
 
-const ribbon = [
-  "China · Yifeng Silver 2024",
-  "Italy · XR Festival Florence 2025",
-  "Germany · Light Our Vision",
-  "India · SIIA Best Projection Mapping",
-  "4× National Best Show",
+const placards = [
+  {
+    place: "Florence, Italy",
+    title: "XR Festival 2025",
+    result: "Third Place Winner",
+    tone: "cream" as const,
+    lean: "left" as const,
+    image: "/media/awards/xr-florence-award.jpg",
+  },
+  {
+    place: "Chemnitz, Germany",
+    title: "The Light Our Vision Festival",
+    result: "Selected & celebrated",
+    tone: "gold" as const,
+    lean: "front" as const,
+    image: "/media/awards/xr-florence-2.jpg",
+  },
+  {
+    place: "China",
+    title: "Yifeng Light Art Competition 2024",
+    result: "Silver Award Winner",
+    tone: "cream" as const,
+    lean: "right" as const,
+    image: "/media/awards/yifeng-silver.jpg",
+  },
 ];
 
+/** Photographs from the nights the trophies were handed over. */
+const ceremony = [
+  { src: "/media/awards/siia-2025-maheshwar.jpg", caption: "SIIA 2025 · Maheshwar Ghat" },
+  { src: "/media/awards/siia-2024-kashi.jpg", caption: "SIIA 2024 · Kashi Vishwanath" },
+  { src: "/media/awards/siia-2024-travancore.jpg", caption: "SIIA 2024 · Travancore House" },
+  { src: "/media/awards/barco-2024.jpg", caption: "BARCO 2024 · Creative Partner" },
+];
+
+const ledger = [
+  ["SIIA — Best Projection Mapping Show, Maheshwar Ghat", "2025"],
+  ["Panasonic Connect — Excellence Award", "2025"],
+  ["SIIA — Best Projection Mapping Show, Travancore House", "2024"],
+  ["SIIA — Best Projection Mapping Show, Kashi Vishwanath Ghat", "2024"],
+  ["BARCO — Most Valuable Creative Partner", "2024"],
+  ["Epson — Winner, Projection Mapping category", "2024"],
+  ["SIIA — Best Projection Mapping Show, Rajwada Palace", "2023"],
+  ["Panasonic Connect — Valued Partner", "2022"],
+];
+
+const lean = {
+  left: "rotateY(14deg) rotateX(4deg)",
+  front: "translateZ(40px)",
+  right: "rotateY(-14deg) rotateX(4deg)",
+};
+
+const shadow = {
+  left: "-2px 2px 0 #E8B04B, -4px 4px 0 #D49C38, -6px 6px 0 #B8812C, -8px 8px 0 #8A5C1A, -30px 40px 60px rgba(0,0,0,0.45)",
+  front: "0 3px 0 #C99032, 0 6px 0 #A06E22, 0 9px 0 #744B13, 0 40px 60px rgba(0,0,0,0.5)",
+  right:
+    "2px 2px 0 #E8B04B, 4px 4px 0 #D49C38, 6px 6px 0 #B8812C, 8px 8px 0 #8A5C1A, 30px 40px 60px rgba(0,0,0,0.45)",
+};
+
+/** The one maroon-flooded band on the page, bulb-edged like an award hoarding. */
 export function AwardsTeaser() {
-  const loop = [...ribbon, ...ribbon];
-
   return (
-    <section className="theme-dark section-pad relative overflow-hidden border-t border-line py-24 md:py-32">
-      <SketchField />
+    <section id="awards" className="overflow-hidden bg-burgundy">
+      <div className="bulbs" aria-hidden />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
-        <div className="max-w-3xl">
-          <p className="text-[11px] tracking-[0.32em] text-gold uppercase">Recognition</p>
-          <h2 className="mt-4 text-3xl font-semibold leading-snug text-cream md:text-5xl">
-            Applause that crossed borders
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-muted md:text-lg">
-            Stages in China, Italy, Germany and India — each honour paired with the light that
-            earned it.
-          </p>
-        </div>
-      </div>
+      <div className="mx-auto max-w-[82.5rem] px-6 py-24">
+        <p className="eyebrow mb-3.5 text-gold-bright">Recognition</p>
+        <h2 className="display-lg max-w-[51rem] text-[clamp(2.125rem,4.4vw,3.875rem)]">
+          Applauded at home. Celebrated abroad.
+        </h2>
 
-      <div className="relative z-10 mt-12 overflow-hidden border-y border-line/40 py-5">
-        <div className="marquee-track-reverse flex w-max gap-10 whitespace-nowrap">
-          {loop.map((item, i) => (
-            <span key={`${item}-${i}`} className="flex items-center gap-10">
-              <span className="text-sm tracking-[0.18em] text-cream uppercase md:text-base">
-                {item}
-              </span>
-              <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
-            </span>
+        <div
+          className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          style={{ perspective: "1400px" }}
+        >
+          {placards.map((award) => (
+            <div
+              key={award.title}
+              className={`tilt overflow-hidden rounded-md ${
+                award.tone === "gold" ? "bg-gold" : "bg-cream"
+              } text-ink`}
+              style={{ transform: lean[award.lean], boxShadow: shadow[award.lean] }}
+            >
+              <div className="relative aspect-[16/10] bg-burgundy-deep">
+                <Image
+                  src={award.image}
+                  alt={`${award.title} — ${award.result}`}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="px-7 pt-6 pb-8">
+                <p className="text-[0.8125rem] font-semibold tracking-[0.16em] text-burgundy uppercase">
+                  {award.place}
+                </p>
+                <p className="mt-3.5 font-display text-[2rem] leading-[1.02] font-black uppercase">
+                  {award.title}
+                </p>
+                <p className="mt-3 font-medium">{award.result}</p>
+              </div>
+            </div>
           ))}
         </div>
-      </div>
 
-      <div className="relative z-10 mx-auto mt-12 grid max-w-7xl gap-5 px-5 md:px-8">
-        {awards.slice(0, 4).map((award, i) => (
-          <MedalCard key={award.id} index={i} image={award.image} imageLeft={i % 2 === 0}>
-            <div className="flex items-start justify-between gap-4">
-              <p className="text-[10px] tracking-[0.24em] text-gold uppercase">
-                {award.place} · {award.year}
-              </p>
-              <span className="text-2xl font-semibold text-burgundy-glow md:text-3xl">
-                {String(i + 1).padStart(2, "0")}
-              </span>
+        <div className="mt-20 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+          {ceremony.map((shot) => (
+            <figure
+              key={shot.src}
+              className="overflow-hidden rounded-md border border-cream/15 bg-burgundy-deep"
+            >
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src={shot.src}
+                  alt={shot.caption}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="px-3.5 py-3 text-[0.8125rem] text-cream-dim">
+                {shot.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div className="mt-14 grid gap-x-10 sm:grid-cols-2">
+          {ledger.map(([name, year]) => (
+            <div
+              key={name}
+              className="flex justify-between gap-4 border-b border-cream/20 py-4.5"
+            >
+              <span>{name}</span>
+              <span className="flex-none text-gold-bright">{year}</span>
             </div>
-            <h3 className="mt-5 text-2xl font-semibold leading-snug text-cream md:text-3xl">
-              {award.title}
-            </h3>
-            <p className="mt-3 text-lg text-gold">{award.result}</p>
-            <p className="mt-3 text-sm leading-relaxed text-muted">{award.detail}</p>
-          </MedalCard>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div className="relative z-10 mx-auto mt-10 max-w-7xl px-5 md:px-8">
         <Link
           href="/awards"
-          className="inline-block text-xs tracking-[0.22em] text-gold uppercase underline-offset-4 hover:underline"
+          className="mt-10 inline-flex min-h-12 items-center gap-2.5 rounded-full bg-cream px-6 font-semibold text-ink transition hover:bg-white"
         >
           All achievements
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </Link>
       </div>
+
+      <div className="bulbs" aria-hidden />
     </section>
-  );
-}
-
-function MedalCard({
-  children,
-  index,
-  image,
-  imageLeft,
-}: {
-  children: React.ReactNode;
-  index: number;
-  image: string;
-  imageLeft: boolean;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const rotateX = useSpring(0, { stiffness: 200, damping: 22 });
-  const rotateY = useSpring(0, { stiffness: 200, damping: 22 });
-  const glowX = useMotionValue(50);
-  const glowY = useMotionValue(50);
-  const gx = useSpring(glowX, { stiffness: 140, damping: 22 });
-  const gy = useSpring(glowY, { stiffness: 140, damping: 22 });
-  const glow = useMotionTemplate`radial-gradient(420px circle at ${gx}% ${gy}%, rgba(240,180,41,0.18), transparent 50%)`;
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ y: 40, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.7, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      onMouseMove={(e) => {
-        const el = ref.current;
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width;
-        const py = (e.clientY - r.top) / r.height;
-        glowX.set(px * 100);
-        glowY.set(py * 100);
-        rotateX.set((py - 0.5) * -8);
-        rotateY.set((px - 0.5) * 8);
-      }}
-      onMouseLeave={() => {
-        rotateX.set(0);
-        rotateY.set(0);
-        glowX.set(50);
-        glowY.set(50);
-      }}
-      style={{ rotateX, rotateY, transformPerspective: 1000 }}
-      className="relative grid overflow-hidden border border-line/50 bg-night-elevated/90 md:grid-cols-[1.1fr_0.9fr]"
-    >
-      <motion.div
-        aria-hidden
-        style={{ background: glow }}
-        className="pointer-events-none absolute inset-0 z-[1]"
-      />
-      <div
-        className={`relative z-[2] min-h-[220px] overflow-hidden md:min-h-[280px] ${
-          imageLeft ? "md:order-1" : "md:order-2"
-        }`}
-      >
-        <Image src={image} alt="" fill className="object-cover opacity-90" sizes="40vw" />
-        <div
-          className={`absolute inset-0 ${
-            imageLeft
-              ? "bg-gradient-to-r from-transparent via-transparent to-night/50 md:to-night/70"
-              : "bg-gradient-to-l from-transparent via-transparent to-night/50 md:to-night/70"
-          }`}
-        />
-      </div>
-      <div
-        className={`relative z-[2] p-6 md:p-8 ${imageLeft ? "md:order-2" : "md:order-1"}`}
-      >
-        {children}
-      </div>
-    </motion.div>
   );
 }

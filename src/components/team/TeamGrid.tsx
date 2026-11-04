@@ -31,7 +31,7 @@ export function TeamGrid() {
             </div>
             <div className="flex flex-col justify-center">
               <p className="text-[10px] tracking-[0.28em] text-gold uppercase">Founder</p>
-              <h2 className="mt-3 text-4xl font-semibold leading-snug text-cream md:text-5xl">
+              <h2 className="display-lg mt-3.5 text-[clamp(2rem,4.2vw,3.5rem)]">
                 {founder.name}
               </h2>
               <p className="mt-3 text-lg text-cream/85">{founder.role}</p>

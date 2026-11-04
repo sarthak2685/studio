@@ -20,7 +20,7 @@ export function AboutTeam() {
       <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
           <p className="text-[11px] tracking-[0.32em] text-gold uppercase">The company</p>
-          <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-snug text-cream md:text-5xl">
+          <h2 className="display-lg mt-3.5 max-w-3xl text-[clamp(2rem,4.2vw,3.5rem)]">
             Minds that map the night
           </h2>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
@@ -45,7 +45,7 @@ export function AboutTeam() {
               </div>
               <div className="flex flex-col justify-center p-6 md:p-10 lg:p-14">
                 <p className="text-[10px] tracking-[0.28em] text-gold uppercase">Founder</p>
-                <h3 className="mt-3 text-3xl font-semibold leading-snug text-cream md:text-5xl">
+                <h3 className="display-lg mt-3.5 text-[clamp(2rem,4.2vw,3.5rem)]">
                   {founder.name}
                 </h3>
                 <p className="mt-3 text-lg text-cream/85">{founder.role}</p>

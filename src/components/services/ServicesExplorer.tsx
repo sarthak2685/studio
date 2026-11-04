@@ -88,7 +88,7 @@ export function ServicesExplorer() {
         <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-6 px-5 py-16 md:flex-row md:items-end md:justify-between md:px-8 md:py-20">
           <div className="max-w-xl">
             <p className="text-[11px] tracking-[0.28em] text-gold uppercase">Next step</p>
-            <h2 className="mt-3 text-3xl font-semibold text-cream md:text-4xl">
+            <h2 className="display-lg mt-3.5 text-[clamp(1.875rem,3.6vw,2.75rem)]">
               Bring us a site. We bring the night.
             </h2>
           </div>

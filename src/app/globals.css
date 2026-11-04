@@ -1,46 +1,65 @@
 @import "tailwindcss";
 
 :root {
-  --night: #2e0c0c;
-  --night-elevated: #3d1212;
+  /* Stage palette — near-black base, maroon reserved for accent bands. */
+  --stage: #050203;
+  --night: #0d0708;
+  --night-elevated: #150b0d;
+  --panel: #080405;
   --burgundy: #5c1818;
-  --burgundy-deep: #240909;
-  --burgundy-glow: #7a2020;
-  --gold: #e8ae2a;
-  --gold-soft: #c49216;
-  --cream: #f1e8dc;
-  --muted: #9a8b82;
-  --line: rgba(232, 174, 42, 0.14);
+  --burgundy-deep: #3e080c;
+  --burgundy-darkest: #2a0507;
+  --burgundy-glow: #7a1c24;
+  --gold: #e8b04b;
+  --gold-bright: #f2c35e;
+  --gold-soft: #c99032;
+  --gold-deep: #a06e22;
+  --cream: #f6eee6;
+  --cream-dim: #e9ddd3;
+  --muted: #bfaea6;
+  --muted-soft: #cdbfb6;
+  --muted-deep: #8f7f78;
+  --ink-on-light: #1a0b0d;
+  --line: rgba(246, 238, 230, 0.12);
   --background: var(--night);
   --foreground: var(--cream);
-  /* Section washes — quiet dark / slightly lifted */
-  --wash-a: #361010;
-  --wash-b: #2e0c0c;
-  --wash-c: #240909;
+  /* Section washes — graphite depth, no maroon tint */
+  --wash-a: #0f090a;
+  --wash-b: #0d0708;
+  --wash-c: #080405;
   --section-surface: var(--night);
   /* Sketch ink — overridden per theme */
-  --sketch-ink: rgba(150, 100, 35, 0.12);
-  --sketch-ink-soft: rgba(180, 160, 140, 0.08);
-  --sketch-glow: rgba(232, 174, 42, 0.03);
-  --sketch-bloom: rgba(92, 24, 24, 0.16);
-  --sketch-draw-opacity: 0.55;
+  --sketch-ink: rgba(232, 174, 42, 0.08);
+  --sketch-ink-soft: rgba(246, 238, 230, 0.05);
+  --sketch-glow: rgba(232, 174, 42, 0.035);
+  --sketch-bloom: rgba(246, 238, 230, 0.025);
+  --sketch-draw-opacity: 0.4;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-stage: var(--stage);
   --color-night: var(--night);
   --color-night-elevated: var(--night-elevated);
+  --color-panel: var(--panel);
   --color-burgundy: var(--burgundy);
   --color-burgundy-deep: var(--burgundy-deep);
+  --color-burgundy-darkest: var(--burgundy-darkest);
   --color-burgundy-glow: var(--burgundy-glow);
   --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
   --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
   --color-cream: var(--cream);
+  --color-cream-dim: var(--cream-dim);
   --color-muted: var(--muted);
+  --color-muted-soft: var(--muted-soft);
+  --color-muted-deep: var(--muted-deep);
+  --color-ink: var(--ink-on-light);
   --color-line: var(--line);
-  --font-sans: var(--font-syne);
-  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-hind);
+  --font-display: var(--font-archivo);
 }
 
 * {
@@ -54,28 +73,129 @@ html {
 body {
   background: var(--night);
   color: var(--cream);
-  font-family: var(--font-syne), system-ui, sans-serif;
+  font-family: var(--font-hind), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--burgundy-glow);
-  color: var(--cream);
+  background: var(--gold);
+  color: var(--ink-on-light);
 }
 
+/* ---------- Typography ---------- */
+
 .font-display {
-  font-family: var(--font-cormorant), Georgia, serif;
-  /* Prevent clipped descenders (g, y, p) on tight headlines */
-  line-height: 1.2;
+  font-family: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
+  font-stretch: 110%;
+  letter-spacing: -0.01em;
   overflow: visible;
-  padding-bottom: 0.08em;
 }
 
 h1,
 h2,
 h3 {
+  font-family: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
+  font-stretch: 108%;
   overflow: visible;
   text-wrap: balance;
+}
+
+/* Marquee-sign headline: uppercase, heavy, physically extruded in maroon. */
+.display-xl {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-stretch: 110%;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+}
+
+.display-lg {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-stretch: 105%;
+  font-weight: 850;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.text-extrude {
+  text-shadow:
+    0 1px 0 #5c1218,
+    0 2px 0 #4e0f14,
+    0 3px 0 #430c10,
+    0 4px 0 #3a0a0d,
+    0 5px 0 #30080b,
+    0 18px 40px rgba(0, 0, 0, 0.7);
+}
+
+.num-extrude {
+  text-shadow:
+    1px 1px 0 #b8812c,
+    2px 2px 0 #a06e22,
+    3px 3px 0 #8a5c1a,
+    4px 4px 0 #744b13,
+    5px 5px 0 #5c1218,
+    6px 6px 0 #4a0e13,
+    7px 7px 0 #3e080c,
+    14px 18px 30px rgba(0, 0, 0, 0.6);
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* ---------- Theatre furniture ---------- */
+
+/* Row of marquee bulbs — the signature edge of a theatre sign. */
+.bulbs {
+  height: 10px;
+  background: radial-gradient(
+      circle,
+      var(--gold-bright) 0 2.5px,
+      rgba(242, 195, 94, 0.28) 3.5px,
+      transparent 4.5px
+    )
+    0 50% / 24px 10px repeat-x;
+}
+
+.bulbs-lg {
+  height: 14px;
+  background: radial-gradient(
+      circle,
+      var(--gold-bright) 0 3.5px,
+      rgba(242, 195, 94, 0.3) 5px,
+      transparent 6.5px
+    )
+    0 50% / 34px 14px repeat-x;
+}
+
+/* Footlights along the bottom edge of a stage. */
+.footlights {
+  background-image: radial-gradient(ellipse 34px 46px at 50% 100%, var(--night) 98%, transparent 100%);
+  background-size: 72px 70px;
+  background-repeat: repeat-x;
+  background-position: 0 100%;
+}
+
+.footlights-back {
+  background-image: radial-gradient(
+    ellipse 38px 50px at 50% 100%,
+    var(--night-elevated) 98%,
+    transparent 100%
+  );
+  background-size: 80px 80px;
+  background-repeat: repeat-x;
+  background-position: 36px 100%;
 }
 
 .noise-overlay {
@@ -83,7 +203,7 @@ h3 {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.025;
+  opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -95,9 +215,9 @@ h3 {
 
 .media-placeholder {
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(92, 24, 24, 0.4), transparent 55%),
-    radial-gradient(ellipse at 70% 80%, rgba(232, 174, 42, 0.06), transparent 50%),
-    linear-gradient(160deg, #3d1212 0%, #2e0c0c 55%, #361010 100%);
+    radial-gradient(ellipse at 30% 20%, rgba(92, 18, 24, 0.28), transparent 55%),
+    radial-gradient(ellipse at 70% 80%, rgba(232, 176, 75, 0.06), transparent 50%),
+    linear-gradient(160deg, #150b0d 0%, #0d0708 55%, #080405 100%);
 }
 
 .sketch-wash {
@@ -108,7 +228,7 @@ h3 {
 }
 
 .sketch-vignette {
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(8, 3, 3, 0.72) 100%);
+  background: radial-gradient(ellipse at center, transparent 42%, rgba(3, 1, 2, 0.74) 100%);
 }
 
 .sketch-glow {
@@ -119,31 +239,38 @@ h3 {
   background: radial-gradient(circle, var(--sketch-bloom), transparent 68%);
 }
 
-/* Quiet alternation — dark stage / slightly lifted stage */
+/* Quiet alternation — house black / slightly lifted panel */
 .theme-dark {
-  --wash-a: #361010;
-  --wash-b: #2e0c0c;
-  --wash-c: #240909;
+  --wash-a: #0f090a;
+  --wash-b: #0d0708;
+  --wash-c: #080405;
   --section-surface: var(--night);
-  --sketch-ink: rgba(120, 78, 28, 0.1);
-  --sketch-ink-soft: rgba(140, 120, 105, 0.06);
-  --sketch-glow: rgba(232, 174, 42, 0.025);
-  --sketch-bloom: rgba(60, 16, 16, 0.22);
-  --sketch-draw-opacity: 0.42;
+  --sketch-ink: rgba(232, 174, 42, 0.07);
+  --sketch-ink-soft: rgba(246, 238, 230, 0.04);
+  --sketch-glow: rgba(232, 174, 42, 0.03);
+  --sketch-bloom: rgba(246, 238, 230, 0.02);
+  --sketch-draw-opacity: 0.34;
   background-color: var(--section-surface);
   color: var(--cream);
 }
 
 .theme-lift {
-  --wash-a: #451616;
-  --wash-b: #3d1212;
-  --wash-c: #341010;
+  --wash-a: #190d10;
+  --wash-b: #150b0d;
+  --wash-c: #110809;
   --section-surface: var(--night-elevated);
-  --sketch-ink: rgba(232, 174, 42, 0.26);
-  --sketch-ink-soft: rgba(244, 235, 224, 0.18);
-  --sketch-glow: rgba(232, 174, 42, 0.07);
-  --sketch-bloom: rgba(120, 36, 36, 0.14);
-  --sketch-draw-opacity: 0.78;
+  --sketch-ink: rgba(232, 174, 42, 0.16);
+  --sketch-ink-soft: rgba(246, 238, 230, 0.1);
+  --sketch-glow: rgba(232, 174, 42, 0.05);
+  --sketch-bloom: rgba(92, 18, 24, 0.14);
+  --sketch-draw-opacity: 0.6;
+  background-color: var(--section-surface);
+  color: var(--cream);
+}
+
+/* Maroon accent band — the one place the burgundy is allowed to flood. */
+.theme-maroon {
+  --section-surface: var(--burgundy);
   background-color: var(--section-surface);
   color: var(--cream);
 }
@@ -153,9 +280,7 @@ h3 {
   isolation: isolate;
 }
 
-.text-balance {
-  text-wrap: balance;
-}
+/* ---------- Motion ---------- */
 
 .marquee-track {
   animation: marquee-x 55s linear infinite;
@@ -188,25 +313,117 @@ h3 {
   }
 }
 
-.product-card {
-  animation: product-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+/* Ribbon tickers — inline-block so the tilted banner can clip them. */
+.ticker {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee-x 46s linear infinite;
+}
+
+.ticker-rev {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee-x 58s linear infinite reverse;
+}
+
+.ribbon:hover .ticker,
+.ribbon:hover .ticker-rev {
+  animation-play-state: paused;
+}
+
+/* The projection room breathes, as if the audience were swaying. */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotateY(-5deg) rotateX(1.5deg);
+  }
+  50% {
+    transform: rotateY(5deg) rotateX(-1.5deg);
+  }
+}
+
+.sway {
   transform-style: preserve-3d;
+  animation: sway 16s ease-in-out infinite;
 }
 
-@keyframes product-in {
-  from {
-    opacity: 0.4;
-    transform: rotateY(-18deg) translateZ(-40px) scale(0.96);
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 0.9;
   }
-  to {
+  42% {
+    opacity: 0.72;
+  }
+  47% {
     opacity: 1;
-    transform: rotateY(0deg) translateZ(0) scale(1);
+  }
+  60% {
+    opacity: 0.82;
   }
 }
 
-.product-stage:hover .product-card {
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  transform: rotateY(-6deg) rotateX(3deg) translateZ(12px);
+.beam {
+  animation: flicker 3.4s infinite;
+}
+
+/* Folding-screen service panels. */
+.fold {
+  position: relative;
+  transition:
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.7s;
+}
+
+.fold-l {
+  transform: perspective(1400px) rotateY(18deg);
+}
+
+.fold-r {
+  transform: perspective(1400px) rotateY(-18deg);
+}
+
+.fold:hover,
+.fold:focus-visible {
+  transform: perspective(1400px) rotateY(0deg) translateZ(60px);
+  z-index: 3;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.fold img,
+.fold video {
+  transition: transform 0.9s;
+}
+
+.fold:hover img,
+.fold:hover video {
+  transform: scale(1.06);
+}
+
+.tilt {
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tilt:hover {
+  transform: perspective(900px) rotateY(-10deg) rotateX(5deg) translateZ(24px);
+}
+
+.ring-card img,
+.ring-card video {
+  transition: transform 0.8s;
+}
+
+.ring-card:hover img,
+.ring-card:hover video {
+  transform: scale(1.05);
+}
+
+.iso-tile {
+  transition: transform 0.5s;
+}
+
+.iso-tile:hover {
+  transform: translateZ(40px);
 }
 
 .scroll-pulse {
@@ -227,6 +444,32 @@ h3 {
   }
 }
 
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+input[type="range"] {
+  accent-color: var(--gold);
+}
+
+@media (max-width: 760px) {
+  .fold-l,
+  .fold-r {
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -239,12 +482,18 @@ h3 {
 
   .marquee-track,
   .marquee-track-reverse,
-  .scroll-pulse,
-  .product-card {
+  .ticker,
+  .ticker-rev,
+  .sway,
+  .beam,
+  .scroll-pulse {
     animation: none !important;
   }
 
-  .product-stage:hover .product-card {
+  .fold-l,
+  .fold-r,
+  .tilt:hover,
+  .iso-tile:hover {
     transform: none !important;
   }
 }
